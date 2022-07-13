@@ -6,4 +6,4 @@
 
 ## Introduction
 O.S.A.G.E. is short for Obstructive Sleep Apnea Gauging Equipment. Studies have shown that ambient temperature, humidity
-& air-pressure have a direct correlation with & can be triggers for 
+& air-pressure have a direct correlation with & can be triggers for inducing or worsening sleep apnea. 
