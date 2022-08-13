@@ -2,6 +2,7 @@
 
 [//]: # ([![Build Status]&#40;https://github.com/gagansopori/pi-watch/actions/workflows/codeql-analysis.yml/badge.svg&#41;]&#40;https://github.com/gagansopori/pi-watch/actions/workflows/codeql-analysis.yml/badge.svg&#41;)
 
+[//]: # ()
 [//]: # ([![]&#40;&#41;]&#40;&#41;)
 
 ## Introduction
