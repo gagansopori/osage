@@ -17,7 +17,7 @@ class TemperaturePressureHumidity:
         self.bme280.setup('forced')
         # init the model class
         self.environment = TemperaturePressureHumidityModel()
-        self.cpu_temp_filepath = ''
+        self.cpu_temp_filepath = '/sys/class/thermal/thermal_zone0/temp'
 
     def measure_humidity(self):
         """This method collects readings from the BME280 Sensor for getting the humidity of the environment at 5 second
