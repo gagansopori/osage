@@ -136,3 +136,5 @@
 .idea/inspectionProfiles/Project_Default.xml
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/.gitignore
+src/__pycache__/__init__.cpython-38.pyc
+*.pyc
