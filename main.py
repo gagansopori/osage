@@ -1,6 +1,6 @@
 import time
 
-from src.modules.temp_pressure_humidity.BME280Measurements import TemperaturePressureHumidity
+from src.modules.temperature_pressure_humidity.TemperaturePressureHumidity import TemperaturePressureHumidity
 
 file_name = "temp_readings.txt"
 
@@ -8,7 +8,7 @@ file_name = "temp_readings.txt"
 def main():
     tmp = TemperaturePressureHumidity()
     while True:
-        temp_temp = tmp.measure_temperature()
+        temp_temp = tmp.get_bme_values()
         write_to_file(temp_temp)
         time.sleep(10)
 
