@@ -48,5 +48,5 @@ class TemperaturePressureHumidity:
     def get_bme_values(self):
         self.environment.raw_temperature, self.environment.raw_pressure, self.environment.raw_humidity = self.bme280.update_sensor()
         self.environment.cpu_temperature = self.get_cpu_temperature()
-        
+
         return self.environment
