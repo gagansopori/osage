@@ -17,7 +17,7 @@ def write_to_file(temp_readings):
     with open(file_name, "a") as temp_data:
         current_time = time.asctime()
         write_text = f"{current_time} - Raw Temperature: {temp_readings.raw_temperature:.3f} & CPU Temperature: {temp_readings.cpu_temperature}\n" \
-                     f"Raw Humidity: {temp_readings.raw_humidity:.3f} & Raw Pressure: {temp_readings.raw_pressure}"
+                     f"Raw Humidity: {temp_readings.raw_humidity:.3f} & Raw Pressure: {temp_readings.raw_pressure}\n\n"
         temp_data.write(write_text)
         temp_data.close()
 
