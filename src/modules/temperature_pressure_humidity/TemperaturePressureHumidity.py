@@ -18,22 +18,6 @@ class TemperaturePressureHumidity:
         # init the model class
         self.environment = TemperaturePressureHumidityModel()
 
-    # def measure_humidity(self):
-    #     """This method collects indoor environment humidity readings from the BME280 Sensor """
-    #     self.environment.raw_humidity = self.bme280.get_humidity()
-    #     return self.environment
-    #
-    # def measure_pressure(self):
-    #     """This method collects indoor environment pressure readings from the BME280 Sensor"""
-    #     self.environment.raw_pressure = self.bme280.get_pressure()
-    #     return self.environment
-    #
-    # def measure_temperature(self):
-    #     """This method collects indoor environment temperature readings from the BME280 Sensor"""
-    #     self.environment.raw_temperature = self.bme280.get_temperature()
-    #     self.environment.cpu_temperature = self.get_cpu_temperature()
-    #     return self.environment
-
     def get_cpu_temperature(self):
         cpu_temp = -69.420
         try:
@@ -45,7 +29,7 @@ class TemperaturePressureHumidity:
 
         return cpu_temp
 
-    def get_bme_values(self):
+    def measure_bme280_values(self):
         self.environment.raw_temperature, self.environment.raw_pressure, self.environment.raw_humidity = self.bme280.update_sensor()
         self.environment.cpu_temperature = self.get_cpu_temperature()
 

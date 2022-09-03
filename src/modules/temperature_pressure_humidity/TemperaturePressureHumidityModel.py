@@ -31,8 +31,9 @@ class TemperaturePressureHumidityModel:
         return self._calibrated_temperature
 
     @calibrated_temperature.setter
-    def calibrated_temperature(self, calibrated):
-        self._calibrated_temperature = calibrated
+    def calibrated_temperature(self, fc_fine):
+        self._calibrated_temperature = fc_fine
+
 
     @property
     def raw_pressure(self):
