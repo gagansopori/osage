@@ -3,11 +3,20 @@
 1. Use the BME-280 sensor to measure indoor pressure & humidity levels at 5 second intervals
 2. Use the BME-280 sensor to measure the ambient temperature at 5 second intervals simultaneously with a TMP-36 sensor
 """
+import RPi.GPIO as GPIO
+
 from . import BME280
 from ..gas_pollution import ADS1015
 
 from src.modules import CPU_TEMPERATURE_FILE
 from src.modules.temperature_pressure_humidity.TemperaturePressureHumidityModel import TemperaturePressureHumidityModel
+
+MICS6814_HEATER_PIN = 24
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(MICS6814_HEATER_PIN, GPIO.OUT)
+GPIO.output(MICS6814_HEATER_PIN, 1)
 
 
 def get_cpu_temperature():
@@ -34,16 +43,31 @@ class TemperaturePressureHumidity:
         self.bme280.setup('forced')
 
         # init the ads1015 chip to control TMP-36 sensor
-        self.ads1015 = ADS1015()
+        self.ads1015 = ADS1015(i2c_addr=0x49)
+        self.ads1015.set_mode('single')
+        self.ads1015.set_programmable_gain(4.096)
+        self.ads1015.set_sample_rate(128)
 
         # init the model class
         self.environment = TemperaturePressureHumidityModel()
+        self.channel_name = 'ref/gnd'
+        self.voltage = None
 
     def measure_bme280_values(self):
         self.environment.raw_temperature, self.environment.raw_pressure, self.environment.raw_humidity = self.bme280.update_sensor()
         self.environment.cpu_temperature = get_cpu_temperature()
+        self.environment.calibrated_temperature = self.measure_tmp36_values()
 
         return self.environment
 
     def measure_tmp36_values(self):
-        pass
+        self.voltage = self.ads1015.get_voltage(self.channel_name)
+        if self.voltage <= 1.0:
+            self.ads1015.set_programmable_gain(1.024)
+            self.voltage = self.ads1015.get_voltage(self.channel_name)
+        elif self.voltage <= 2.0:
+            self.ads1015.set_programmable_gain(2.048)
+            self.voltage = self.ads1015.get_voltage(self.channel_name)
+
+        tmp_36 = 100 * (self.voltage - 0.5)
+        return tmp_36
