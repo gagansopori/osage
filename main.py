@@ -19,7 +19,8 @@ def main():
 def write_to_file(temp_readings, lux_prox):
     with open(file_name, "a") as temp_data:
         current_time = time.asctime()
-        write_text = f"{current_time}\nRaw Temperature: {temp_readings.raw_temperature:.3f}\nCPU Temperature: {temp_readings.cpu_temperature}\n" \
+        write_text = f"{current_time}\nRaw Temperature: {temp_readings.raw_temperature:.3f}\n" \
+                     f"CPU Temperature: {temp_readings.cpu_temperature}\nTMP36 Temperature: {temp_readings.calibrated_temperature:.3f}\n" \
                      f"Raw Humidity: {temp_readings.raw_humidity:.3f}\nRaw Pressure: {temp_readings.raw_pressure:.3f}\n" \
                      f"Current Light: {lux_prox.lux:.3f}\nCurrent Proximity: {lux_prox.proximity:.3f}\n\n"
         temp_data.write(write_text)

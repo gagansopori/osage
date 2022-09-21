@@ -11,12 +11,12 @@ from ..gas_pollution import ADS1015
 from src.modules import CPU_TEMPERATURE_FILE
 from src.modules.temperature_pressure_humidity.TemperaturePressureHumidityModel import TemperaturePressureHumidityModel
 
-MICS6814_HEATER_PIN = 24
-
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(MICS6814_HEATER_PIN, GPIO.OUT)
-GPIO.output(MICS6814_HEATER_PIN, 1)
+# MICS6814_HEATER_PIN = 24
+#
+# GPIO.setwarnings(False)
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(MICS6814_HEATER_PIN, GPIO.OUT)
+# GPIO.output(MICS6814_HEATER_PIN, 1)
 
 
 def get_cpu_temperature():
@@ -62,12 +62,12 @@ class TemperaturePressureHumidity:
 
     def measure_tmp36_values(self):
         self.voltage = self.ads1015.get_voltage(self.channel_name)
-        if self.voltage <= 1.0:
-            self.ads1015.set_programmable_gain(1.024)
-            self.voltage = self.ads1015.get_voltage(self.channel_name)
-        elif self.voltage <= 2.0:
-            self.ads1015.set_programmable_gain(2.048)
-            self.voltage = self.ads1015.get_voltage(self.channel_name)
+        # if self.voltage <= 1.0:
+        #     self.ads1015.set_programmable_gain(1.024)
+        #     self.voltage = self.ads1015.get_voltage(self.channel_name)
+        # elif self.voltage <= 2.0:
+        #     self.ads1015.set_programmable_gain(2.048)
+        #     self.voltage = self.ads1015.get_voltage(self.channel_name)
 
         tmp_36 = 100 * (self.voltage - 0.5)
         return tmp_36
