@@ -7,12 +7,12 @@ file_name = "temp_readings.txt"
 
 
 def main():
-    tmp = TemperaturePressureHumidity()
+    tph = TemperaturePressureHumidity()
     lap = LightProximity()
     while True:
-        temp_temp = tmp.measure_bme280_values()
+        pres_hum = tph.measure_bme280_values()
         lux_prox = lap.measure_ltr559_values()
-        write_to_file(temp_temp, lux_prox)
+        write_to_file(pres_hum, lux_prox)
         time.sleep(10)
 
 
