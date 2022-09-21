@@ -24,7 +24,7 @@ def main():
     while True:
         pres_hum = tph.measure_bme280_values()
         lux_prox = lap.measure_ltr559_values()
-        write_to_file(pres_hum, lux_prox)
+        # write_to_file(pres_hum, lux_prox)
         write_to_csv(pres_hum, lux_prox)
         time.sleep(10)
 
