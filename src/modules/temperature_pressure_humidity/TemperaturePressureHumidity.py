@@ -56,7 +56,7 @@ class TemperaturePressureHumidity:
         self.environment.raw_pressure = p1
         self.environment.raw_humidity = h1
 
-        tmp1 = self.measure_tmp36_values()
+        tmp1 = self.measure_tmp36_values(self.channel_name)
         self.environment.tmp_temperature = tmp1
 
         self.environment.cpu_temperature = get_cpu_temperature()
