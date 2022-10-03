@@ -1,8 +1,8 @@
 class TemperaturePressureHumidityModel:
     def __init__(self):
-        self._raw_temperature: float = 0.0
+        self._bme_temperature: float = 0.0
         self._cpu_temperature: float = 0.0
-        self._calibrated_temperature: float = 0.0
+        self._tmp_temperature: float = 0.0
 
         self._raw_pressure: float = 0.0
         self._calibrated_pressure: float = 0.0
@@ -11,12 +11,12 @@ class TemperaturePressureHumidityModel:
         self._calibrated_humidity: float = 0.0
 
     @property
-    def raw_temperature(self):
-        return self._raw_temperature
+    def bme_temperature(self):
+        return self._bme_temperature
 
-    @raw_temperature.setter
-    def raw_temperature(self, fc):
-        self._raw_temperature = fc
+    @bme_temperature.setter
+    def bme_temperature(self, fc):
+        self._bme_temperature = fc
 
     @property
     def cpu_temperature(self):
@@ -27,13 +27,12 @@ class TemperaturePressureHumidityModel:
         self._cpu_temperature = cpu
 
     @property
-    def calibrated_temperature(self):
-        return self._calibrated_temperature
+    def tmp_temperature(self):
+        return self._tmp_temperature
 
-    @calibrated_temperature.setter
-    def calibrated_temperature(self, fc_fine):
-        self._calibrated_temperature = fc_fine
-
+    @tmp_temperature.setter
+    def tmp_temperature(self, fc_fine):
+        self._tmp_temperature = fc_fine
 
     @property
     def raw_pressure(self):

@@ -7,8 +7,10 @@
 from . import BME280
 from ..gas_pollution import ADS1015
 
-from src.modules import CPU_TEMPERATURE_FILE
+from src.modules import CPU_TEMPERATURE_FILE, OXIDIZING_GASES, REDUCING_GASES, NH3_AMMONIA
 from src.modules.temperature_pressure_humidity.TemperaturePressureHumidityModel import TemperaturePressureHumidityModel
+from ..gas_pollution.GasPollutants import GasPollutants
+from ..gas_pollution.GasPollutionModel import GasPollutionModel
 
 
 def get_cpu_temperature():
@@ -43,16 +45,28 @@ class TemperaturePressureHumidity:
         # init the model class
         self.environment = TemperaturePressureHumidityModel()
         self.channel_name = 'ref/gnd'
-        self.voltage = None
 
-    def measure_bme280_values(self):
-        self.environment.raw_temperature, self.environment.raw_pressure, self.environment.raw_humidity = self.bme280.update_sensor()
+    def populate_sensor_data(self):
+        """
+        Driver Method compiling the Environment factors' measurement values
+        :return:
+        """
+        t1, p1, h1 = self.measure_bme280_values()
+        self.environment.bme_temperature = t1
+        self.environment.raw_pressure = p1
+        self.environment.raw_humidity = h1
+
+        tmp1 = self.measure_tmp36_values()
+        self.environment.tmp_temperature = tmp1
+
         self.environment.cpu_temperature = get_cpu_temperature()
-        self.environment.calibrated_temperature = self.measure_tmp36_values()
 
         return self.environment
 
-    def measure_tmp36_values(self):
-        self.voltage = self.ads1015.get_voltage(self.channel_name)
-        tmp_36 = 100 * (self.voltage - 0.5)
+    def measure_bme280_values(self):
+        return self.bme280.update_sensor()
+
+    def measure_tmp36_values(self, channel_name) -> float:
+        voltage = self.ads1015.get_voltage(channel_name)
+        tmp_36 = 100 * (voltage - 0.5)
         return tmp_36
