@@ -40,7 +40,7 @@ class GasPollutants:
         :param warm_up_indicator:
         :return:
         """
-        o_init, r_init, a_init, o_current, r_current, a_current = None
+        o_init, r_init, a_init, o_current, r_current, a_current = None, None, None, None, None, None
         if warm_up_indicator:
             o_init= self.read_gas_raw(OXIDIZING_GASES)
             r_init = self.read_gas_raw(REDUCING_GASES)
