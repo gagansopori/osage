@@ -6,10 +6,24 @@
 
 from . import BME280
 from ..gas_pollution import ADS1015
+import RPi.GPIO as GPIO
 
 from src.modules import CPU_TEMPERATURE_FILE
 from src.modules.temperature_pressure_humidity.TemperaturePressureHumidityModel import TemperaturePressureHumidityModel
 
+
+
+
+MICS6814_HEATER_PIN = 24
+def setup():
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(MICS6814_HEATER_PIN, GPIO.OUT)
+    GPIO.output(MICS6814_HEATER_PIN, 1)
+    # atexit.register(cleanup)
+
+def cleanup():
+    GPIO.output(MICS6814_HEATER_PIN, 0)
 
 def get_cpu_temperature():
     """
@@ -65,6 +79,8 @@ class TemperaturePressureHumidity:
         return self.bme280.update_sensor()
 
     def measure_tmp36_values(self, channel_name) -> float:
+        setup()
         voltage = self.ads1015.get_voltage(channel_name)
         tmp_36 = 100 * (voltage - 0.5)
+        cleanup()
         return tmp_36
