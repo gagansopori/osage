@@ -42,9 +42,24 @@ class GasPollutants:
         """
         o_init, r_init, a_init, o_current, r_current, a_current = None, None, None, None, None, None
         if warm_up_indicator:
-            o_init= self.read_gas_raw(OXIDIZING_GASES)
+            # R0 overtime for Oxidizing Gases
+            o_init = self.read_gas_raw(OXIDIZING_GASES)
+            if not self.gas.oxidizing_init == 0.0:
+                o_init = round((o_init + self.gas.oxidizing_init) / 2)
+
+            # R0 overtime for Reducing Gases
             r_init = self.read_gas_raw(REDUCING_GASES)
+            if not self.gas.reducing_init == 0.0:
+                r_init = round((r_init + self.gas.reducing_init) / 2)
+
+            # R0 overtime for Ammonia (NH3)
             a_init = self.read_gas_raw(NH3_AMMONIA)
+            if not self.gas.nh3ammonia_init == 0.0:
+                a_init = round((a_init + self.gas.reducing_init) / 2)
+        else:
+            o_init = self.gas.oxidizing_init
+            r_init = self.gas.reducing_init
+            a_init = self.gas.nh3ammonia_init
 
         o_current = self.read_gas_raw(OXIDIZING_GASES)
         r_current = self.read_gas_raw(REDUCING_GASES)
@@ -88,24 +103,24 @@ class GasPollutants:
         gas_vals = GasPollutionModel()
 
         # Oxidizing Ratio
-        if o_init is not None and o_current/o_init > 0:
-            rsr0_oxd = o_current/o_init
+        if o_init is not None and o_current / o_init > 0:
+            rsr0_oxd = o_current / o_init
         else:
             rsr0_oxd = 0.0001
         gas_vals.ads_oxidizing = o_current
         gas_vals.oxidizing_ppm = math.pow(10, math.log10(rsr0_oxd) - 0.8129)
 
         # Reducing Ratio
-        if r_init is not None and r_current/r_init > 0:
-            rsr0_red = r_current/r_init
+        if r_init is not None and r_current / r_init > 0:
+            rsr0_red = r_current / r_init
         else:
             rsr0_red = 0.0001
         gas_vals.ads_reducing = r_current
         gas_vals.reducing_ppm = math.pow(10, -1.25 * math.log10(rsr0_red) + 0.64)
 
         # Ammonia Ratio
-        if a_init is not None and a_current/a_init > 0:
-            rsr0_nh3 = a_current/a_init
+        if a_init is not None and a_current / a_init > 0:
+            rsr0_nh3 = a_current / a_init
         else:
             rsr0_nh3 = 0.0001
         gas_vals.ads_nh3ammonia = a_current
