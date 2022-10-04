@@ -12,7 +12,7 @@ def setup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(MICS6814_HEATER_PIN, GPIO.OUT)
     GPIO.output(MICS6814_HEATER_PIN, 1)
-    atexit.register(cleanup)
+    # atexit.register(cleanup)
 
 def cleanup():
     GPIO.output(MICS6814_HEATER_PIN, 0)
@@ -35,7 +35,6 @@ class GasPollutants:
         self.gas = GasPollutionModel()
 
     def measure_ads1015_values(self):
-        setup()
         self.gas.ads_oxidizing = self.measure_gas_values(OXIDIZING_GASES)
         self.gas.ads_reducing = self.measure_gas_values(REDUCING_GASES)
         self.gas.ads_nh3ammonia = self.measure_gas_values(NH3_AMMONIA)
@@ -43,12 +42,13 @@ class GasPollutants:
         return self.gas
 
     def measure_gas_values(self, channel_name):
+        setup()
         try:
             v = self.ads_1015.get_voltage(channel_name)
             v = (v * 56000) / (3.3 - v)
         except ZeroDivisionError:
             v = 0
-
+        cleanup()
         return v
         # v, Ri = self.read_gas_sensor(channel)
         # return 1.0 / ((1.0 / ((v * 56000.0) / (3.3 - v))) - (1.0 / Ri))
