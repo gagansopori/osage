@@ -76,31 +76,33 @@ class GasPollutants:
         setup()
         try:
             v = self.ads_1015.get_voltage(channel_name)
-            print(f"{channel_name} has voltage of {v}")
+            print(f"Pimoroni - {channel_name} has voltage of {v}")
+            x, Ri = self.read_gas_sensor(channel_name)
+            print(f"HWCave's - {channel_name} has voltage of {x}")
             v = (v * 56000) / (3.3 - v)
+            print(f"HW Caves reading for {channel_name} - {1.0 / ((1.0 / ((x * 56000.0) / (3.3 - x))) - (1.0 / Ri))}")
         except ZeroDivisionError:
             v = 0
         cleanup()
         return v
-        # v, Ri = self.read_gas_sensor(channel)
+
         # return 1.0 / ((1.0 / ((v * 56000.0) / (3.3 - v))) - (1.0 / Ri))
 
-    # def read_gas_sensor(self, ch):
-    #     channel_name = 'in' + chr(48 + ch) + '/gnd'
-    #     self.ads_1015.set_programmable_gain(4.096)
-    #     Ri = 6000000
-    #     v = self.ads_1015.get_voltage(channel_name)
-    #
-    #     if v <= 1.0:
-    #         self.ads_1015.set_programmable_gain(1.024)
-    #         v = self.ads_1015.get_voltage(channel_name)
-    #         Ri = 3000000
-    #     elif v <= 2.0:
-    #         self.ads_1015.set_programmable_gain(2.048)
-    #         v = self.ads_1015.get_voltage(channel_name)
-    #         Ri = 6000000
-    #
-    #     return v, Ri
+    def read_gas_sensor(self, ch):
+        self.ads_1015.set_programmable_gain(4.096)
+        Ri = 6000000
+        v = self.ads_1015.get_voltage(ch)
+
+        if v <= 1.0:
+            self.ads_1015.set_programmable_gain(1.024)
+            v = self.ads_1015.get_voltage(ch)
+            Ri = 3000000
+        elif v <= 2.0:
+            self.ads_1015.set_programmable_gain(2.048)
+            v = self.ads_1015.get_voltage(ch)
+            Ri = 6000000
+
+        return v, Ri
 
     def raw_to_ppm(self, o_init, r_init, a_init, o_current, r_current, a_current):
         gas_vals = GasPollutionModel()
