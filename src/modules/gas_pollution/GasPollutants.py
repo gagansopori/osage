@@ -1,18 +1,20 @@
-import atexit
+import math
+
 import RPi.GPIO as GPIO
 
 from src.modules import OXIDIZING_GASES, REDUCING_GASES, NH3_AMMONIA
 from src.modules.gas_pollution import ADS1015
 from src.modules.gas_pollution.GasPollutionModel import GasPollutionModel
 
-
 MICS6814_HEATER_PIN = 24
+
+
 def setup():
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(MICS6814_HEATER_PIN, GPIO.OUT)
     GPIO.output(MICS6814_HEATER_PIN, 1)
-    # atexit.register(cleanup)
+
 
 def cleanup():
     GPIO.output(MICS6814_HEATER_PIN, 0)
@@ -24,24 +26,35 @@ class GasPollutants:
         self.ads_1015 = ADS1015(i2c_addr=0x49)
         self.ads_1015.set_mode('single')
         self.ads_1015.set_programmable_gain(6.148)
-        self.ads_1015.set_sample_rate(128)
-
-        # init the GPIO for MICS-6814 sensor
-        # GPIO.setwarnings(False)
-        # GPIO.setmode(GPIO.BCM)
-        # GPIO.setup(MICS6814_HEATER_PIN, GPIO.OUT)
-        # GPIO.output(MICS6814_HEATER_PIN, 1)
+        if self.ads_1015.detect_chip_type() == 'ADS1115':
+            self.ads_1015.set_sample_rate(128)
+        else:
+            self.ads_1015.set_sample_rate(1600)
 
         self.gas = GasPollutionModel()
 
-    def measure_ads1015_values(self):
-        self.gas.ads_oxidizing = self.measure_gas_values(OXIDIZING_GASES)
-        self.gas.ads_reducing = self.measure_gas_values(REDUCING_GASES)
-        self.gas.ads_nh3ammonia = self.measure_gas_values(NH3_AMMONIA)
+    def fetch_gas_ppm(self, warm_up_indicator):
+        """
+        Driver Method that fetches all the raw gas-sensor values (measured in Ohms) & converts them to
+        parts-per-million (ppm) values for a human understandable system.
+        :param warm_up_indicator:
+        :return:
+        """
+        o_init, r_init, a_init, o_current, r_current, a_current = None
+        if warm_up_indicator:
+            o_init= self.read_gas_raw(OXIDIZING_GASES)
+            r_init = self.read_gas_raw(REDUCING_GASES)
+            a_init = self.read_gas_raw(NH3_AMMONIA)
+
+        o_current = self.read_gas_raw(OXIDIZING_GASES)
+        r_current = self.read_gas_raw(REDUCING_GASES)
+        a_current = self.read_gas_raw(NH3_AMMONIA)
+
+        self.gas = self.raw_to_ppm(o_init, r_init, a_init, o_current, r_current, a_current)
 
         return self.gas
 
-    def measure_gas_values(self, channel_name):
+    def read_gas_raw(self, channel_name):
         setup()
         try:
             v = self.ads_1015.get_voltage(channel_name)
@@ -70,3 +83,32 @@ class GasPollutants:
     #         Ri = 6000000
     #
     #     return v, Ri
+
+    def raw_to_ppm(self, o_init, r_init, a_init, o_current, r_current, a_current):
+        gas_vals = GasPollutionModel()
+
+        # Oxidizing Ratio
+        if o_init is not None and o_current/o_init > 0:
+            rsr0_oxd = o_current/o_init
+        else:
+            rsr0_oxd = 0.0001
+        gas_vals.ads_oxidizing = o_current
+        gas_vals.oxidizing_ppm = math.pow(10, math.log10(rsr0_oxd) - 0.8129)
+
+        # Reducing Ratio
+        if r_init is not None and r_current/r_init > 0:
+            rsr0_red = r_current/r_init
+        else:
+            rsr0_red = 0.0001
+        gas_vals.ads_reducing = r_current
+        gas_vals.reducing_ppm = math.pow(10, -1.25 * math.log10(rsr0_red) + 0.64)
+
+        # Ammonia Ratio
+        if a_init is not None and a_current/a_init > 0:
+            rsr0_nh3 = a_current/a_init
+        else:
+            rsr0_nh3 = 0.0001
+        gas_vals.ads_nh3ammonia = a_current
+        gas_vals.nh3ammonia_ppm = math.pow(10, -1.8 * math.log10(rsr0_nh3) - 0.163)
+
+        return gas_vals

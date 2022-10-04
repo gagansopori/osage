@@ -7,3 +7,6 @@ CPU_TEMPERATURE_FILE = '/sys/class/thermal/thermal_zone0/temp'
 OXIDIZING_GASES = 'in0/gnd'
 REDUCING_GASES = 'in1/gnd'
 NH3_AMMONIA = 'in2/gnd'
+
+# Generic Constants
+WARM_UP_TIME = 600
