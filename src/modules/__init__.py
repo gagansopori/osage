@@ -4,6 +4,6 @@
 CPU_TEMPERATURE_FILE = '/sys/class/thermal/thermal_zone0/temp'
 
 # Sensor Specific Constants
-OXIDIZING_GASES = 0
-REDUCING_GASES = 1
-NH3_AMMONIA = 2
+OXIDIZING_GASES = 'in0/gnd'
+REDUCING_GASES = 'in1/gnd'
+NH3_AMMONIA = 'in2/gnd'

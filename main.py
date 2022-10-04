@@ -48,7 +48,7 @@ def write_to_csv(temp_readings, lux_prox, gas_poll):
     row_data = [f"{current_time}", f"{temp_readings.bme_temperature:.3f}", f"{temp_readings.cpu_temperature}",
                 f"{temp_readings.tmp_temperature:.3f}", f"{temp_readings.raw_humidity:.3f}",
                 f"{temp_readings.raw_pressure:.3f}", f"{lux_prox.lux:.3f}", f"{lux_prox.proximity:.3f}",
-                f"{gas_poll.ads_oxidizing}", f"{gas_poll.ads_reducing}", f"{gas_poll.ads_nh3ammonia}"]
+                f"{gas_poll.ads_oxidizing:.3f}", f"{gas_poll.ads_reducing:.3f}", f"{gas_poll.ads_nh3ammonia:.3f}"]
     with open(csv_file, 'a') as env_data:
         writer = csv.writer(env_data)
         writer.writerow(row_data)

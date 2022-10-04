@@ -23,7 +23,7 @@ class GasPollutants:
         # init the ADS-1015 sensor
         self.ads_1015 = ADS1015(i2c_addr=0x49)
         self.ads_1015.set_mode('single')
-        self.ads_1015.set_programmable_gain(4.096)
+        self.ads_1015.set_programmable_gain(6.148)
         self.ads_1015.set_sample_rate(128)
 
         # init the GPIO for MICS-6814 sensor
@@ -42,9 +42,16 @@ class GasPollutants:
 
         return self.gas
 
-    def measure_gas_values(self, channel):
-        v, Ri = self.read_gas_sensor(channel)
-        return 1.0 / ((1.0 / ((v * 56000.0) / (3.3 - v))) - (1.0 / Ri))
+    def measure_gas_values(self, channel_name):
+        try:
+            v = self.ads_1015.get_voltage(channel_name)
+            v = (v * 56000) / (3.3 - v)
+        except ZeroDivisionError:
+            v = 0
+
+        return v
+        # v, Ri = self.read_gas_sensor(channel)
+        # return 1.0 / ((1.0 / ((v * 56000.0) / (3.3 - v))) - (1.0 / Ri))
 
     def read_gas_sensor(self, ch):
         channel_name = 'in' + chr(48 + ch) + '/gnd'
