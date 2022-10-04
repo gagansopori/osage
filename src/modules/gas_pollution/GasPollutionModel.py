@@ -81,5 +81,5 @@ class GasPollutionModel:
         return self._reducing_init
 
     @reducing_init.setter
-    def reducing_ppm(self, red_init):
+    def reducing_init(self, red_init):
         self._reducing_init = red_init
