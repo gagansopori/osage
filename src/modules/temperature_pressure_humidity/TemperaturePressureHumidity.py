@@ -7,10 +7,8 @@
 from . import BME280
 from ..gas_pollution import ADS1015
 
-from src.modules import CPU_TEMPERATURE_FILE, OXIDIZING_GASES, REDUCING_GASES, NH3_AMMONIA
+from src.modules import CPU_TEMPERATURE_FILE
 from src.modules.temperature_pressure_humidity.TemperaturePressureHumidityModel import TemperaturePressureHumidityModel
-from ..gas_pollution.GasPollutants import GasPollutants
-from ..gas_pollution.GasPollutionModel import GasPollutionModel
 
 
 def get_cpu_temperature():
