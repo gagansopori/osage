@@ -29,7 +29,7 @@ class GasPollutants:
         channel_name = 'in' + chr(48 + ch) + '/gnd'
         self.ads_1015.set_programmable_gain(4.096)
         Ri = 6000000
-        v = self.ads_1015.get_voltage(ch)
+        v = self.ads_1015.get_voltage(channel_name)
 
         if v <= 1.0:
             self.ads_1015.set_programmable_gain(1.024)
