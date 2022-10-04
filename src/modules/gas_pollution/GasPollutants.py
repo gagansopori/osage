@@ -46,16 +46,19 @@ class GasPollutants:
             o_init = self.read_gas_raw(OXIDIZING_GASES)
             if not self.gas.oxidizing_init == 0.0:
                 o_init = round((o_init + self.gas.oxidizing_init) / 2)
+            self.gas.oxidizing_init = o_init
 
             # R0 overtime for Reducing Gases
             r_init = self.read_gas_raw(REDUCING_GASES)
             if not self.gas.reducing_init == 0.0:
                 r_init = round((r_init + self.gas.reducing_init) / 2)
+            self.gas.reducing_init = r_init
 
             # R0 overtime for Ammonia (NH3)
             a_init = self.read_gas_raw(NH3_AMMONIA)
             if not self.gas.nh3ammonia_init == 0.0:
                 a_init = round((a_init + self.gas.reducing_init) / 2)
+            self.gas.nh3ammonia_init = a_init
         else:
             o_init = self.gas.oxidizing_init
             r_init = self.gas.reducing_init
