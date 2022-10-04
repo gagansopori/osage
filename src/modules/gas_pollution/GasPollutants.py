@@ -35,6 +35,8 @@ class GasPollutants:
         self.gas = GasPollutionModel()
 
     def measure_ads1015_values(self):
+        adc = self.ads_1015.detect_chip_type()
+        print(adc)
         self.gas.ads_oxidizing = self.measure_gas_values(OXIDIZING_GASES)
         # self.gas.ads_reducing = self.measure_gas_values(REDUCING_GASES)
         # self.gas.ads_nh3ammonia = self.measure_gas_values(NH3_AMMONIA)
