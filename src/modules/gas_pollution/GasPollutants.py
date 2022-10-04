@@ -47,6 +47,7 @@ class GasPollutants:
         setup()
         try:
             v = self.ads_1015.get_voltage(channel_name)
+            print(v)
             v = (v * 56000) / (3.3 - v)
         except ZeroDivisionError:
             v = 0

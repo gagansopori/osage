@@ -18,7 +18,7 @@ class GasPollutionModel:
 
     @ads_oxidizing.setter
     def ads_oxidizing(self, oxd):
-        self._ads_nh3ammonia = oxd
+        self._ads_oxidizing = oxd
 
     @property
     def ads_reducing(self):
@@ -26,4 +26,4 @@ class GasPollutionModel:
 
     @ads_reducing.setter
     def ads_reducing(self, red):
-        self._ads_nh3ammonia = red
+        self._ads_reducing = red
