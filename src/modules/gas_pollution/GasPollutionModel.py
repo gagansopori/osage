@@ -2,15 +2,15 @@ class GasPollutionModel:
     def __init__(self):
         self._ads_nh3ammonia: float = 0.0
         self._nh3ammonia_ppm: float = 0.0
-        self._nh3ammonia_init: float = 0.0
+        self._nh3ammonia_init: float = 4956.151
 
         self._ads_oxidizing: float = 0.0
         self._oxidizing_ppm: float = 0.0
-        self._oxidizing_init: float = 0.0
+        self._oxidizing_init: float = 379143.488
 
         self._ads_reducing: float = 0.0
         self._reducing_ppm: float = 0.0
-        self._reducing_init: float = 0.0
+        self._reducing_init: float = 6261.529
 
     @property
     def ads_nh3ammonia(self):

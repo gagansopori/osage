@@ -67,14 +67,17 @@ class GasPollutants:
         #     r_init = self.gas.reducing_init
         #     a_init = self.gas.nh3ammonia_init
 
+        o_init = self.gas.oxidizing_init
         o_current = self.read_gas_raw(OXIDIZING_GASES)
-        r_current = self.read_gas_raw(REDUCING_GASES)
-        a_current = self.read_gas_raw(NH3_AMMONIA)
-        o_init = o_current
-        r_init = r_current
-        a_init = a_current
 
-        self.gas = self.raw_to_ppm(o_init, r_init, a_init, o_current, r_current, a_current)
+        r_init = self.gas.reducing_init
+        r_current = self.read_gas_raw(REDUCING_GASES)
+
+        a_init = self.gas.nh3ammonia_init
+        a_current = self.read_gas_raw(NH3_AMMONIA)
+
+        self.gas = self.raw_to_ppm(o_init, r_init, a_init,
+                                   o_current, r_current, a_current)
 
         return self.gas
 
