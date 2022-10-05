@@ -63,6 +63,7 @@ class GasPollutants:
             o_init = self.gas.oxidizing_init
             r_init = self.gas.reducing_init
             a_init = self.gas.nh3ammonia_init
+            print(f"{o_init}, {r_init}, {a_init}")
 
         o_current = self.read_gas_raw(OXIDIZING_GASES)
         r_current = self.read_gas_raw(REDUCING_GASES)
