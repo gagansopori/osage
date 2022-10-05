@@ -25,7 +25,7 @@ class GasPollutants:
         # init the ADS-1015 sensor
         self.ads_1015 = ADS1015(i2c_addr=0x49)
         self.ads_1015.set_mode('single')
-        self.ads_1015.set_programmable_gain(6.148)
+        self.ads_1015.set_programmable_gain(6.144)
         if self.ads_1015.detect_chip_type() == 'ADS1115':
             self.ads_1015.set_sample_rate(128)
         else:
