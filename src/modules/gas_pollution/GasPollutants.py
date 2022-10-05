@@ -37,36 +37,42 @@ class GasPollutants:
         """
         Driver Method that fetches all the raw gas-sensor values (measured in Ohms) & converts them to
         parts-per-million (ppm) values for a human understandable system.
+        TODO: Add logic to persist the r0 values (o_init, a_init, r_init) & calculate avg. over-time for Rs/r0 Ratio
+        TODO: Rs/r0 is the same thing as current_value/init_value.
+        TODO: refer to: https://github.com/roscoe81/enviro-monitor/blob/master/Northcliff_AQI_Monitor_Gen.py#L382
         :param warm_up_indicator:
         :return:
         """
-        o_init, r_init, a_init, o_current, r_current, a_current = None, None, None, None, None, None
-        if warm_up_indicator:
-            # R0 overtime for Oxidizing Gases
-            o_init = self.read_gas_raw(OXIDIZING_GASES)
-            if not self.gas.oxidizing_init == 0.0:
-                o_init = round((o_init + self.gas.oxidizing_init) / 2)
-            self.gas.oxidizing_init = o_init
-
-            # R0 overtime for Reducing Gases
-            r_init = self.read_gas_raw(REDUCING_GASES)
-            if not self.gas.reducing_init == 0.0:
-                r_init = round((r_init + self.gas.reducing_init) / 2)
-            self.gas.reducing_init = r_init
-
-            # R0 overtime for Ammonia (NH3)
-            a_init = self.read_gas_raw(NH3_AMMONIA)
-            if not self.gas.nh3ammonia_init == 0.0:
-                a_init = round((a_init + self.gas.reducing_init) / 2)
-            self.gas.nh3ammonia_init = a_init
-        else:
-            o_init = self.gas.oxidizing_init
-            r_init = self.gas.reducing_init
-            a_init = self.gas.nh3ammonia_init
+        # o_init, r_init, a_init, o_current, r_current, a_current = None, None, None, None, None, None
+        # if warm_up_indicator:
+        #     # R0 overtime for Oxidizing Gases
+        #     o_init = self.read_gas_raw(OXIDIZING_GASES)
+        #     if not self.gas.oxidizing_init == 0.0:
+        #         o_init = round((o_init + self.gas.oxidizing_init) / 2)
+        #     self.gas.oxidizing_init = o_init
+        #
+        #     # R0 overtime for Reducing Gases
+        #     r_init = self.read_gas_raw(REDUCING_GASES)
+        #     if not self.gas.reducing_init == 0.0:
+        #         r_init = round((r_init + self.gas.reducing_init) / 2)
+        #     self.gas.reducing_init = r_init
+        #
+        #     # R0 overtime for Ammonia (NH3)
+        #     a_init = self.read_gas_raw(NH3_AMMONIA)
+        #     if not self.gas.nh3ammonia_init == 0.0:
+        #         a_init = round((a_init + self.gas.reducing_init) / 2)
+        #     self.gas.nh3ammonia_init = a_init
+        # else:
+        #     o_init = self.gas.oxidizing_init
+        #     r_init = self.gas.reducing_init
+        #     a_init = self.gas.nh3ammonia_init
 
         o_current = self.read_gas_raw(OXIDIZING_GASES)
         r_current = self.read_gas_raw(REDUCING_GASES)
         a_current = self.read_gas_raw(NH3_AMMONIA)
+        o_init = o_current
+        r_init = r_current
+        a_init = a_current
 
         self.gas = self.raw_to_ppm(o_init, r_init, a_init, o_current, r_current, a_current)
 
