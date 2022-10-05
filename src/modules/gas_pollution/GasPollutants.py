@@ -117,6 +117,7 @@ class GasPollutants:
         #     rsr0_oxd = o_current / o_init
         # else:
         #     rsr0_oxd = 0.0001
+        print(f"Rs/R0 Oxidizing - {rsr0_oxd}")
         gas_vals.ads_oxidizing = o_current
         gas_vals.oxidizing_ppm = math.pow(10, math.log10(rsr0_oxd) - 0.8129)
 
@@ -129,6 +130,7 @@ class GasPollutants:
         #     rsr0_red = r_current / r_init
         # else:
         #     rsr0_red = 0.0001
+        print(f"Rs/R0 Reducing - {rsr0_red}")
         gas_vals.ads_reducing = r_current
         gas_vals.reducing_ppm = math.pow(10, -1.25 * math.log10(rsr0_red) + 0.64)
 
@@ -141,6 +143,7 @@ class GasPollutants:
         #     rsr0_nh3 = a_current / a_init
         # else:
         #     rsr0_nh3 = 0.0001
+        print(f"Rs/R0 Ammonia - {rsr0_nh3}")
         gas_vals.ads_nh3ammonia = a_current
         gas_vals.nh3ammonia_ppm = math.pow(10, -1.8 * math.log10(rsr0_nh3) - 0.163)
 
