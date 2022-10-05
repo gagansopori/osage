@@ -82,7 +82,6 @@ class GasPollutants:
         setup()
         try:
             v = self.ads_1015.get_voltage(channel_name)
-            print(f"{channel_name} has voltage of {v}")
             # x, Ri = self.read_gas_sensor(channel_name)
             # print(f"HWCave's - {channel_name} has voltage of {x}")
             v = (v * 56000) / (3.3 - v)
@@ -112,7 +111,6 @@ class GasPollutants:
 
     def raw_to_ppm(self, o_init, r_init, a_init, o_current, r_current, a_current):
         gas_vals = GasPollutionModel()
-        print(f"{o_init}, {r_init}, {a_init}, {o_current}, {r_current}, {a_current}")
 
         # Oxidizing Ratio
         try:
