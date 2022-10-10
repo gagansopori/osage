@@ -8,8 +8,19 @@ from . import BME280
 from ..gas_pollution import ADS1015
 import RPi.GPIO as GPIO
 
-from src.modules import CPU_TEMPERATURE_FILE
+from src.modules import CPU_TEMPERATURE_FILE, TMP_36, MICS6814_HEATER_PIN
 from src.modules.temperature_pressure_humidity.TemperaturePressureHumidityModel import TemperaturePressureHumidityModel
+
+
+def setup():
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(MICS6814_HEATER_PIN, GPIO.OUT)
+    GPIO.output(MICS6814_HEATER_PIN, 1)
+
+
+def cleanup():
+    GPIO.output(MICS6814_HEATER_PIN, 0)
 
 
 def get_cpu_temperature():
@@ -35,7 +46,7 @@ class TemperaturePressureHumidity:
         self.bme280 = BME280()
         self.bme280.setup('forced')
 
-        # init the ads1015 chip to control TMP-36 sensor
+        # init the ads1115 chip to control TMP-36 sensor
         self.ads1015 = ADS1015(i2c_addr=0x49)
         self.ads1015.set_mode('single')
         self.ads1015.set_programmable_gain(4.096)
@@ -43,7 +54,6 @@ class TemperaturePressureHumidity:
 
         # init the model class
         self.environment = TemperaturePressureHumidityModel()
-        self.channel_name = 'ref/gnd'
 
     def populate_sensor_data(self):
         """
@@ -55,7 +65,7 @@ class TemperaturePressureHumidity:
         self.environment.raw_pressure = p1
         self.environment.raw_humidity = h1
 
-        tmp1 = self.measure_tmp36_values(self.channel_name)
+        tmp1 = self.measure_tmp36_values(TMP_36)
         self.environment.tmp_temperature = tmp1
 
         self.environment.cpu_temperature = get_cpu_temperature()
@@ -66,6 +76,8 @@ class TemperaturePressureHumidity:
         return self.bme280.update_sensor()
 
     def measure_tmp36_values(self, channel_name) -> float:
+        setup()
         voltage = self.ads1015.get_voltage(channel_name)
         tmp_36 = 100 * (voltage - 0.5)
+        cleanup()
         return tmp_36
