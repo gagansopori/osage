@@ -49,7 +49,7 @@ class TemperaturePressureHumidity:
         # init the ads1115 chip to control TMP-36 sensor
         self.ads1015 = ADS1015(i2c_addr=0x49)
         self.ads1015.set_mode('single')
-        self.ads1015.set_programmable_gain(6.144)
+        self.ads1015.set_programmable_gain(4.096)
         self.ads1015.set_sample_rate(128)
 
         # init the model class
