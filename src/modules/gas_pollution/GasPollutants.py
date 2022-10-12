@@ -91,6 +91,7 @@ class GasPollutants:
             # x, Ri = self.read_gas_sensor(channel_name)
             # print(f"HWCave's - {channel_name} has voltage of {x}")
             v = (v * 56000) / (3.3 - v)
+            print(f"v in Ohms for {channel_name} - {v}\n")
             # print(f"HW Caves reading for {channel_name} - {1.0 / ((1.0 / ((x * 56000.0) / (3.3 - x))) - (1.0 / Ri))}")
         except ZeroDivisionError:
             v = 0
