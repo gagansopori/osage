@@ -3,6 +3,7 @@
 1. Use the BME-280 sensor to measure indoor pressure & humidity levels at 5 second intervals
 2. Use the BME-280 sensor to measure the ambient temperature at 5 second intervals simultaneously with a TMP-36 sensor
 """
+import time
 
 from . import BME280
 from ..gas_pollution import ADS1015
@@ -80,4 +81,5 @@ class TemperaturePressureHumidity:
         voltage = self.ads1015.get_voltage(channel_name)
         tmp_36 = 100 * (voltage - 0.5)
         cleanup()
+        time.sleep(1)
         return tmp_36
