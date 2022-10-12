@@ -33,7 +33,6 @@ def main():
         gas_poll = GasPollutionModel()
         pres_hum = tph.populate_sensor_data()
         lux_prox = lap.measure_ltr559_values()
-        time.sleep(10)
         if ctr == WARM_UP_TIME:
             gas_poll = gpl.fetch_gas_ppm(True)
             ctr = 1
