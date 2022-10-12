@@ -81,5 +81,4 @@ class TemperaturePressureHumidity:
         voltage = self.ads1015.get_voltage(channel_name)
         tmp_36 = 100 * (voltage - 0.5)
         cleanup()
-        time.sleep(1)
         return tmp_36
