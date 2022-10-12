@@ -39,7 +39,7 @@ def main():
             gas_poll = gpl.fetch_gas_ppm(False)
             ctr += 1
         write_to_csv(pres_hum, lux_prox, gas_poll)
-        time.sleep(10)
+        time.sleep(6)
 
 
 def write_to_csv(temp_readings, lux_prox, gas_poll):
