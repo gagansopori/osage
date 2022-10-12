@@ -30,7 +30,6 @@ def main():
     gpl = GasPollutants()
     ctr = 0
     while True:
-        # gas_poll = GasPollutionModel()
         pres_hum = tph.populate_sensor_data()
         lux_prox = lap.measure_ltr559_values()
         if ctr == WARM_UP_TIME:
