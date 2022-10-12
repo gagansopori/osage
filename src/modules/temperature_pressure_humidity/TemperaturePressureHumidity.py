@@ -77,9 +77,8 @@ class TemperaturePressureHumidity:
         return self.bme280.update_sensor()
 
     def measure_tmp36_values(self, channel_name) -> float:
-        # setup()
+        setup()
         voltage = self.ads1015.get_voltage(channel_name)
-        print(voltage)
         tmp_36 = 100 * (voltage - 0.5)
-        # cleanup()
+        cleanup()
         return tmp_36
