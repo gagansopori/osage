@@ -84,10 +84,8 @@ class GasPollutants:
         setup()
         try:
             v = self.ads_1015.get_voltage(channel_name)
-            # print(f"v - {channel_name}: {v}")
             time.sleep(1)
             v = self.ads_1015.get_voltage(channel_name)
-            # print(f"v2 - {channel_name}: {v}")
             # x, Ri = self.read_gas_sensor(channel_name)
             # print(f"HWCave's - {channel_name} has voltage of {x}")
             v = (v * 56000) / (3.3 - v)

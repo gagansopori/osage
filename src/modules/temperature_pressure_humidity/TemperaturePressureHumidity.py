@@ -66,7 +66,9 @@ class TemperaturePressureHumidity:
 
     def measure_tmp36_values(self, channel_name) -> float:
         voltage = self.ads1015.get_voltage(channel_name)
+        print(f"Voltage = {voltage}")
         time.sleep(1)
-        voltage = self.ads1015.get_voltage(channel_name)
+        # voltage = self.ads1015.get_voltage(channel_name)
         tmp_36 = 100 * (voltage - 0.5)
+        print(f"temperature - {tmp_36}")
         return tmp_36
