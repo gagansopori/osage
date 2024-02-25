@@ -6,7 +6,9 @@ from .LightProximityModel import LightProximityModel
 
 class LightProximity:
     def __init__(self):
+        # initialize sensor
         self.ltr559 = LTR559()
+        # initialize model class
         self.light = LightProximityModel()
 
     def measure_ltr559_values(self):
