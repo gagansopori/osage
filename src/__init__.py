@@ -2,6 +2,7 @@
 # If there is anything else that needs initializing, we do it here.
 import os.path
 import sqlite3
+import time
 import uuid
 from configparser import ConfigParser
 import platform
@@ -24,6 +25,7 @@ class DeviceInfo:
             config = self._add_config()
             with open(device_info, 'w') as config_file:
                 config.write(config_file)
+        time.sleep(5)
 
     def _add_config(self) -> ConfigParser:
         config = ConfigParser()
@@ -57,7 +59,6 @@ class DatabaseInfo:
                                     analog_temp REAL, 
                                     bme_humid REAL, 
                                     bme_pres REAL, 
-                                    bme_alt REAL, 
                                     ltr_lux REAL, 
                                     ltr_prox REAL, 
                                     gas_oxi REAL, 
