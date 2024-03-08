@@ -10,6 +10,9 @@ class TemperaturePressureHumidityModel:
         self._raw_humidity: float = 0.0
         self._calibrated_humidity: float = 0.0
 
+        # self._raw_altitude: float = 0.0
+        # self._calibrated_altitude: float = 0.0
+
     @property
     def bme_temperature(self):
         return self._bme_temperature
@@ -65,3 +68,19 @@ class TemperaturePressureHumidityModel:
     @calibrated_humidity.setter
     def calibrated_humidity(self, hum_c):
         self.calibrated_humidity = hum_c
+
+    # @property
+    # def raw_altitude(self):
+    #     return self._raw_altitude
+    #
+    # @raw_altitude.setter
+    # def raw_humidity(self, alt):
+    #     self._raw_altitude = alt
+    #
+    # @property
+    # def calibrated_altitude(self):
+    #     return self._calibrated_altitude
+    #
+    # @calibrated_altitude.setter
+    # def calibrated_altitude(self, alt_c):
+    #     self.calibrated_altitude = alt_c

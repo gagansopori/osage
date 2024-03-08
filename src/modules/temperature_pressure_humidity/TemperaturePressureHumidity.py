@@ -14,8 +14,8 @@ from src.modules.temperature_pressure_humidity.TemperaturePressureHumidityModel 
 
 def get_cpu_temperature():
     """
-    Get the CPU temperature. While it won't be directly used for temperature compensation, it is going to be used to derive
-    the compensation factor for achieving accurate temperatures from the TMP36 or the BME280 sensors.
+    Get the CPU temperature. While it won't be directly used for temperature compensation, it is going to be used to
+    derive the compensation factor for achieving accurate temperatures from the TMP36 or the BME280 sensors.
     :return:
     """
     cpu_temp = -69.420
