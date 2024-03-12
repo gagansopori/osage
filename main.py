@@ -2,9 +2,9 @@ import configparser
 
 from src.modules import WARM_UP_TIME
 from src.modules.data.WriteSensorDataToSqliteDB import write_to_db
-from src.modules.gas_pollution.GasPollutants import GasPollutants
-from src.modules.light_proximity.LightProximity import LightProximity
-from src.modules.temperature_pressure_humidity.TemperaturePressureHumidity import TemperaturePressureHumidity
+from src.modules.sensors.gas_pollution.GasPollutants import GasPollutants
+from src.modules.sensors.light_proximity.LightProximity import LightProximity
+from src.modules.sensors.temperature_pressure_humidity.TemperaturePressureHumidity import TemperaturePressureHumidity
 
 
 device_info = "device_info.ini"
@@ -14,12 +14,12 @@ def main(id):
     while True:
         pres_hum = TemperaturePressureHumidity().populate_sensor_data()
         lux_prox = LightProximity().measure_ltr559_values()
-        if ctr == WARM_UP_TIME:
-            gas_poll = GasPollutants().fetch_gas_ppm(True)
-            ctr = 1
-        else:
-            gas_poll = GasPollutants().fetch_gas_ppm(False)
-            ctr += 1
+        # if ctr == WARM_UP_TIME:
+        #     gas_poll = GasPollutants().fetch_gas_ppm(True)
+        #     ctr = 1
+        # else:
+        #     gas_poll = GasPollutants().fetch_gas_ppm(False)
+        #     ctr += 1
 
         try:
             write_to_db(pres_hum, lux_prox, gas_poll, id)
