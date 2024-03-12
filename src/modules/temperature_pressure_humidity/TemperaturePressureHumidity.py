@@ -5,7 +5,7 @@
 """
 import time
 
-from . import BME280
+from ..drivers.BME20 import BME280
 from ..gas_pollution import ADS1015
 
 from src.modules import CPU_TEMPERATURE_FILE, TMP_36

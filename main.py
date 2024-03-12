@@ -1,12 +1,13 @@
 import configparser
 
-from src import device_info
 from src.modules import WARM_UP_TIME
 from src.modules.data.WriteSensorDataToSqliteDB import write_to_db
 from src.modules.gas_pollution.GasPollutants import GasPollutants
 from src.modules.light_proximity.LightProximity import LightProximity
 from src.modules.temperature_pressure_humidity.TemperaturePressureHumidity import TemperaturePressureHumidity
 
+
+device_info = "device_info.ini"
 
 def main(id):
     ctr = 0
