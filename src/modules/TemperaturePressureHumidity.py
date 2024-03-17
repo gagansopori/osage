@@ -5,11 +5,11 @@
 """
 import time
 
-from . import BME280
-from ..gas_pollution import ADS1015
+from library.drivers import BME280
+from src.modules.gas_pollution import ADS1015
 
 from src.modules import CPU_TEMPERATURE_FILE, TMP_36
-from src.modules.temperature_pressure_humidity.TemperaturePressureHumidityModel import TemperaturePressureHumidityModel
+from src.models.TemperaturePressureHumidityModel import TemperaturePressureHumidityModel
 
 
 def get_cpu_temperature():

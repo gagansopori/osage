@@ -4,8 +4,8 @@ import time
 import RPi.GPIO as GPIO
 
 from src.modules import OXIDIZING_GASES, REDUCING_GASES, NH3_AMMONIA, MICS6814_HEATER_PIN
-from src.modules.gas_pollution import ADS1015
-from src.modules.gas_pollution.GasPollutionModel import GasPollutionModel
+from library.drivers import ADS1015
+from src.models.GasPollutionModel import GasPollutionModel
 
 
 def setup():

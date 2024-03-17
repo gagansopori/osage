@@ -1,7 +1,7 @@
 import sqlite3
 import time
 
-from src.modules.data import INSERT_SENSOR_DATA
+from src.data import INSERT_SENSOR_DATA, INSERT_BASIC_SENSOR_DATA
 
 
 def write_to_db(temp_readings, lux_prox, gas_poll, id):
@@ -27,6 +27,29 @@ def write_to_db(temp_readings, lux_prox, gas_poll, id):
         with connection:
             cursor = connection.cursor()
             cursor.execute(INSERT_SENSOR_DATA, row_data)
+    except sqlite3.Error as e:
+        print(f"Error occurred inserting data into table sensor: {e}")
+    finally:
+        connection.close()
+    time.sleep(2)
+
+
+def write_to_db(temp_readings, lux_prox, id):
+    current_time = time.asctime()
+    row_data = (f"{id}",
+                f"{current_time}",
+                f"{temp_readings.cpu_temperature}",
+                f"{temp_readings.bme_temperature:.3f}",
+                f"{temp_readings.raw_humidity:.3f}",
+                f"{temp_readings.raw_pressure:.3f}",
+                f"{lux_prox.lux:.3f}",
+                f"{lux_prox.proximity:.3f}"
+                )
+    try:
+        connection = sqlite3.connect("enviro.db")
+        with connection:
+            cursor = connection.cursor()
+            cursor.execute(INSERT_BASIC_SENSOR_DATA, row_data)
     except sqlite3.Error as e:
         print(f"Error occurred inserting data into table sensor: {e}")
     finally:

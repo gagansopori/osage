@@ -14,10 +14,10 @@ fetch_all_tables = """SELECT name FROM sqlite_master WHERE type='table';"""
 class DeviceInfo:
     def __init__(self):
         if not os.path.isfile(device_info):
-            print(f"No config file found. Creating a config file now.")
+            print("No config file found. Creating a config file now.")
             self._init_device()
         else:
-            print(f"Config file found. Reading and applying configurations.")
+            print("Config file found. Reading and applying configurations.")
             self._init_device(device_info)
 
     def _init_device(self, file_name=None) -> None:
@@ -48,7 +48,7 @@ class DatabaseInfo:
                 result = cursor.execute(fetch_all_tables).fetchall()
 
                 if len(result) == 0:
-                    print(f"No Table found in Osage's Database. Configuring DB now...")
+                    print("No Table found in Osage's Database. Configuring DB now...")
 
                 # Sensor Data
                 cursor.execute('''CREATE TABLE IF NOT EXISTS sensor_data(
@@ -67,6 +67,7 @@ class DatabaseInfo:
                                     oxi_ppm REAL, 
                                     red_ppm REAL, 
                                     nh3_ppm REAL);''')
+                print("Successfully created all tables in the database.")
         except sqlite3.OperationalError as oe:
             print(f"Operational Error occurred: {oe}")
         except sqlite3.IntegrityError as ie:
