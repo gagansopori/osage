@@ -1,15 +1,12 @@
 import configparser
-
-from src.modules import WARM_UP_TIME
-from src.modules.data.WriteSensorDataToSqliteDB import write_to_db
-from src.modules.sensors.gas_pollution.GasPollutants import GasPollutants
-from src.modules.sensors.light_proximity.LightProximity import LightProximity
-from src.modules.sensors.temperature_pressure_humidity.TemperaturePressureHumidity import TemperaturePressureHumidity
-
+from src.data.WriteSensorDataToSqliteDB import write_to_db
+from src.modules.LightProximity import LightProximity
+from src.modules.TemperaturePressureHumidity import TemperaturePressureHumidity
 
 device_info = "device_info.ini"
 
-def main(id):
+
+def main(device_id):
     ctr = 0
     while True:
         pres_hum = TemperaturePressureHumidity().populate_sensor_data()
@@ -22,7 +19,7 @@ def main(id):
         #     ctr += 1
 
         try:
-            write_to_db(pres_hum, lux_prox, gas_poll, id)
+            write_to_db(pres_hum, lux_prox, device_id)
         except Exception as e:
             print(f"Exception occurred during the process: {e}")
 

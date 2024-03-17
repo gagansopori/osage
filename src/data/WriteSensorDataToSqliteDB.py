@@ -1,7 +1,7 @@
 import sqlite3
 import time
 
-from src.modules.data import INSERT_SENSOR_DATA, INSERT_BASIC_SENSOR_DATA
+from src.data import INSERT_SENSOR_DATA, INSERT_BASIC_SENSOR_DATA
 
 
 def write_to_db(temp_readings, lux_prox, gas_poll, id):

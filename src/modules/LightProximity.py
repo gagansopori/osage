@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from .LightProximityModel import LightProximityModel
-from src.modules.drivers.LTR559 import LTR559
+from src.models.LightProximityModel import LightProximityModel
+from library.drivers import LTR559
 
 
 class LightProximity:
