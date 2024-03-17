@@ -7,7 +7,7 @@ class EnviroMini:
     def __init__(self):
         self.build_enviro_mini(BoardBuilder())
 
-    def build_enviro_mini(self, builder):
+    def build_enviro_mini(self, builder: object) -> object:
         return builder\
             .set_bme280_env_sensor(BME280())\
             .set_ltr559_light_sensor(LTR559())\
