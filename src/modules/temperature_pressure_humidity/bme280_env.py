@@ -5,7 +5,7 @@
 """
 import time
 
-from library.drivers import BME280
+from library.drivers import BME280, ADS1X15
 from src.modules.gas_pollution import ADS1015
 
 from src.modules import CPU_TEMPERATURE_FILE, TMP_36
@@ -54,8 +54,8 @@ class TemperaturePressureHumidity:
         self.environment.raw_pressure = p1
         self.environment.raw_humidity = h1
 
-        tmp1 = self.measure_tmp36_values(TMP_36)
-        self.environment.tmp_temperature = tmp1
+        # tmp1 = self.measure_tmp36_values(TMP_36)
+        # self.environment.tmp_temperature = tmp1
 
         self.environment.cpu_temperature = get_cpu_temperature()
 
@@ -64,11 +64,11 @@ class TemperaturePressureHumidity:
     def measure_bme280_values(self):
         return self.bme280.update_sensor()
 
-    def measure_tmp36_values(self, channel_name) -> float:
-        voltage = self.ads1015.get_voltage(channel_name)
-        print(f"Voltage = {voltage}")
-        time.sleep(1)
-        # voltage = self.ads1015.get_voltage(channel_name)
-        tmp_36 = 100 * (voltage - 0.5)
-        print(f"temperature - {tmp_36}")
-        return tmp_36
+    # def measure_tmp36_values(self, channel_name) -> float:
+    #     voltage = self.ads1015.get_voltage(channel_name)
+    #     print(f"Voltage = {voltage}")
+    #     time.sleep(1)
+    #     # voltage = self.ads1015.get_voltage(channel_name)
+    #     tmp_36 = 100 * (voltage - 0.5)
+    #     print(f"temperature - {tmp_36}")
+    #     return tmp_36

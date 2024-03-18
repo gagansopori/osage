@@ -1,7 +1,7 @@
 import configparser
 from src.data.WriteSensorDataToSqliteDB import write_to_db
-from src.modules.LightProximity import LightProximity
-from src.modules.TemperaturePressureHumidity import TemperaturePressureHumidity
+from src.modules.light_proximity.LightProximity import LightProximity
+from src.modules.temperature_pressure_humidity.bme280_env import TemperaturePressureHumidity
 
 device_info = "device_info.ini"
 

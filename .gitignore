@@ -138,3 +138,4 @@
 .idea/.gitignore
 src/__pycache__/__init__.cpython-38.pyc
 *.pyc
+/.idea/sonarlint
