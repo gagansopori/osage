@@ -1,7 +1,7 @@
 from library.boards import BoardBuilder
-from library.drivers.ADS1X15 import ADS1015
-from library.drivers.BME280 import BME280
-from library.drivers.LTR559 import LTR559
+from library.drivers.ads1015 import ADS1015
+from library.drivers.bme280 import BME280
+from library.drivers.ltr559 import LTR559
 
 
 class EnviroPlus:

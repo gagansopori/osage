@@ -6,7 +6,7 @@
 """
 import time
 
-from library.drivers.ADS1X15 import ADS1015
+from library.drivers.ads1015 import ADS1015
 from src.modules import CPU_TEMPERATURE_FILE
 
 

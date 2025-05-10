@@ -5,8 +5,8 @@
 """
 import time
 
-from library.drivers import BME280, ADS1X15
-from src.modules.gas_pollution import ADS1015
+from library.drivers.ads1015 import ADS1015
+from library.drivers.bme280 import BME280
 
 from src.modules import CPU_TEMPERATURE_FILE, TMP_36
 from src.models.TemperaturePressureHumidityModel import TemperaturePressureHumidityModel

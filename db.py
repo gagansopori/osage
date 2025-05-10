@@ -15,19 +15,19 @@ class DeviceInfo:
     def __init__(self):
         if not os.path.isfile(device_info):
             print("No config file found. Creating a config file now.")
-            self._init_device()
+            self._setup()
         else:
             print("Config file found. Reading and applying configurations.")
-            self._init_device(device_info)
+            self._setup(device_info)
 
-    def _init_device(self, file_name=None) -> None:
+    def _setup(self, file_name=None) -> None:
         if not file_name:
-            config = self._add_config()
+            config = self._configure()
             with open(device_info, 'w') as config_file:
                 config.write(config_file)
         time.sleep(5)
 
-    def _add_config(self) -> ConfigParser:
+    def _configure(self) -> ConfigParser:
         config = ConfigParser()
         config['DEVICE_INFO'] = {
             'device_id': uuid.getnode(),
