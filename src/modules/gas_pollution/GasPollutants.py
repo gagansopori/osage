@@ -4,8 +4,8 @@ import time
 import RPi.GPIO as GPIO
 
 from src.modules import OXIDIZING_GASES, REDUCING_GASES, NH3_AMMONIA, MICS6814_HEATER_PIN
-from src.modules.gas_pollution import ADS1015
-from src.modules.gas_pollution.GasPollutionModel import GasPollutionModel
+from library.drivers import ads1015
+from src.models.GasPollutionModel import GasPollutionModel
 
 
 def setup():
@@ -22,7 +22,7 @@ def cleanup():
 class GasPollutants:
     def __init__(self):
         # init the ADS-1015 sensor
-        self.ads_1015 = ADS1015(i2c_addr=0x49)
+        self.ads_1015 = ADS1X15(i2c_addr=0x49)
         self.ads_1015.set_mode('single')
         self.ads_1015.set_programmable_gain(4.096)
         if self.ads_1015.detect_chip_type() == 'ADS1115':
